@@ -32,8 +32,7 @@ class CamelConsumer extends Actor with Consumer {
     case msg: Message => 
       val msgStr = msg.getBodyAs(classOf[String])
       println(msgStr)
-
-      self.reply("ACK")
+      self.channel ! "ACK"
   }
 }
 

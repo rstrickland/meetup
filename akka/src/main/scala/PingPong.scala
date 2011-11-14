@@ -6,8 +6,8 @@ import akka.dispatch.Dispatchers
 import akka.dispatch.Dispatchers._
 
 object PingPong extends App {
-  val pingPong1 = actorOf[PingPongActor]
-  val pingPong2 = actorOf[PingPongActor]
+  val pingPong1 = actorOf[PingPongActor].start
+  val pingPong2 = actorOf[PingPongActor].start
 
   val supervisorConfig = SupervisorConfig(AllForOneStrategy(List(classOf[Throwable]), 3, 1000), Nil)
   val supervisor = Supervisor(supervisorConfig)
@@ -37,27 +37,19 @@ case class PingWithCallbackMessage(msg: String)
 /**
  * PingPongActor
  */
-object PingPongActor {
-  val dispatcher = Dispatchers.newExecutorBasedEventDrivenWorkStealingDispatcher("PingPong").build
-}
-
 class PingPongActor extends Actor {
-  //self.faultHandler = OneForOneStrategy(List(classOf[Throwable]), 5, 5000)
-  //self.lifeCycle = Permanent
-  self.dispatcher = PingPongActor.dispatcher
-  
   override def receive = {
     case Ping => 
       println("Ping received")
     case PingWithCallbackMessage(msg) => 
       println("Ping received with message: " + msg)
-      self reply msg
+      self.channel ! msg
     case _ => 
       throw new Exception("You killed me with a bad message!")
   }
   
   override def preStart = {
-    println("PingPongActor preStart")
+    println("PingPongActor starting")
   }
 
   override def postRestart(err: Throwable) = {

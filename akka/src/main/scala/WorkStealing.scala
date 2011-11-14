@@ -1,6 +1,5 @@
 import akka.actor.Actor
 import akka.actor.Actor._
-import akka.actor.Supervisor
 import akka.config.Supervision._
 import akka.dispatch.Dispatchers
 import akka.dispatch.Dispatchers._
