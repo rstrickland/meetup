@@ -1,0 +1,41 @@
+import akka.actor._
+import akka.http._
+import akka.config._
+import akka.config.Supervision._
+import akka.util._
+
+class MistActor extends Actor with Endpoint {
+  self.dispatcher = Endpoint.Dispatcher
+
+  def hook(uri:String) = uri startsWith "/mistTest"
+  def provide(uri:String) = Actor.actorOf[MistActorService].start
+
+  override def preStart = Actor.registry.actorsFor(classOf[RootEndpoint]).head ! Endpoint.Attach(hook, provide)
+
+  def receive = handleHttpRequest
+}
+
+class MistActorService extends Actor {
+  def receive = {
+
+    case get:Get =>
+
+      def default(any: Any) = ""
+      val action = get.getParameterOrElse("action", default)
+      
+      action match {
+
+        case "ping" => 
+          try {
+            // do something interesting
+            get OK "pong"            
+          } catch {
+            case e => get OK e.toString
+          }
+
+        case _ => get OK "Invalid parameter"
+      }
+
+    case other:RequestMethod => other NotAllowed "unsupported request"
+  }
+}
