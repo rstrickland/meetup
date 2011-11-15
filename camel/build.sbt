@@ -25,9 +25,3 @@ libraryDependencies ++= Seq(
   "org.mortbay.jetty" % "servlet-api" % "3.0.20100224" % "provided"
 )
 
-resolvers ++= Seq(
-  "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/",
-  "Scala Tools Nexus Snapshots" at "http://nexus.scala-tools.org/content/repositories/snapshots/",
-  "Scala Tools Nexus Releases" at "http://nexus.scala-tools.org/content/repositories/releases/"
-)
-
