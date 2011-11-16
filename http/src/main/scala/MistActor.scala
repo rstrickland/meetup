@@ -1,16 +1,24 @@
 import akka.actor._
+import akka.actor.Actor._
 import akka.http._
 import akka.config._
 import akka.config.Supervision._
 import akka.util._
 
+class Boot {
+  val factory = SupervisorFactory(SupervisorConfig(OneForOneStrategy(List(classOf[Exception]), 3, 100),
+                  Supervise(actorOf[MistActor], Permanent) :: Nil))
+  
+  factory.newInstance.start
+}
+
 class MistActor extends Actor with Endpoint {
   self.dispatcher = Endpoint.Dispatcher
 
   def hook(uri:String) = uri startsWith "/mistTest"
-  def provide(uri:String) = Actor.actorOf[MistActorService].start
+  def provide(uri:String) = actorOf[MistActorService].start
 
-  override def preStart = Actor.registry.actorsFor(classOf[RootEndpoint]).head ! Endpoint.Attach(hook, provide)
+  override def preStart = registry.actorsFor(classOf[RootEndpoint]).head ! Endpoint.Attach(hook, provide)
 
   def receive = handleHttpRequest
 }
