@@ -1,3 +1,5 @@
+package meetup.http
+
 import akka.actor._
 import akka.actor.Actor._
 import akka.http._
@@ -7,6 +9,7 @@ import akka.util._
 
 class Boot {
   val factory = SupervisorFactory(SupervisorConfig(OneForOneStrategy(List(classOf[Exception]), 3, 100),
+		  Supervise(actorOf[RootEndpoint], Permanent) :: 
                   Supervise(actorOf[MistActor], Permanent) :: Nil))
   
   factory.newInstance.start
