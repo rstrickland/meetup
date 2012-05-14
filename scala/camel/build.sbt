@@ -20,6 +20,7 @@ libraryDependencies ++= Seq(
   "org.apache.camel" % "camel" % "2.8.2",
   "org.apache.camel" % "camel-jetty" % "2.8.2",
   "org.apache.camel" % "camel-mina" % "2.8.2",
+  "org.apache.camel" % "camel-soap" % "2.8.2",
   "org.apache.mina" % "mina-core" % "1.1.7",
   "org.eclipse.jetty" % "jetty-webapp" % "8.0.0.M2" % "test",
   "org.mortbay.jetty" % "servlet-api" % "3.0.20100224" % "provided"
