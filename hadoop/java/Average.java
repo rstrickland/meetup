@@ -87,6 +87,7 @@ public class Average extends Configured implements Tool {
     
         public void map(ByteBuffer key, SortedMap<ByteBuffer, IColumn> columns, Context context) throws IOException, InterruptedException { 
       
+            //group values by column name
             for (IColumn col : columns.values())
     	        context.write(new Text(ByteBufferUtil.string(col.name())),
 			      new LongWritable(ByteBufferUtil.toLong(col.value())));

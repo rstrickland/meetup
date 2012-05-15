@@ -28,6 +28,7 @@ object Average extends Configured with Tool {
   }
   
   def run(args: Array[String]) : Int = {
+
     _logger.info("Starting Average")
     ConfigHelper.setRangeBatchSize(getConf(), 99)
     
@@ -81,6 +82,7 @@ object Average extends Configured with Tool {
     
     job.waitForCompletion(true)
     return 0
+
   }
   
   class Map extends Mapper[ByteBuffer, SortedMap[ByteBuffer, IColumn], Text, LongWritable] {  
@@ -88,6 +90,7 @@ object Average extends Configured with Tool {
     override def map(key: ByteBuffer, columns: SortedMap[ByteBuffer, IColumn], 
 		     context: Mapper[ByteBuffer, SortedMap[ByteBuffer, IColumn], Text, LongWritable]#Context) { 
       
+      //group values by column name
       columns.values.foreach { col => 
         context.write(new Text(ByteBufferUtil.string(col.name)), new LongWritable(ByteBufferUtil.toLong(col.value)))
       }
