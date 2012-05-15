@@ -1,0 +1,9 @@
+#!/bin/bash
+if [ ! -d "bin" ]; then
+    mkdir bin
+fi
+scalac -classpath ../lib/*:. -d bin Average.scala
+cd bin
+jar -cfm average.jar ../MANIFEST.MF *
+rm *.class 
+cd ..

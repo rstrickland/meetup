@@ -1,0 +1,4 @@
+set TestInput['key1']['col1'] = 12;
+set TestInput['key2']['col1'] = 8;
+set TestInput['key1']['col2'] = 10;
+set TestInput['key2']['col2'] = 5;

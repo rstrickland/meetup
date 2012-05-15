@@ -1,0 +1,19 @@
+PREREQUISITES:
+- Cassandra 1.1
+- Hadoop 1.0.1+
+- JDK 1.6
+- Scala 2.9 (if building the Scala job)
+
+1. Open the Cassandra CLI, connect to a node, and paste the contents of cassandra_schema.txt.
+
+2. Use seed_data.txt to populate some sample data, or add your own data.
+
+3. cd into either java or scala, and run the build script to generate the jar file.
+
+4. Execute the run script as follows:
+
+	./run <cass_host> <num_reducers> <keyspace> <input_column_family> <output_column_family>
+
+   Example if running locally using the schema script above:
+
+	./run localhost 1 HadoopTest TestInput TestOutput

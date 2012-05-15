@@ -1,0 +1,9 @@
+#!/bin/bash
+if [ ! -d "bin" ]; then
+    mkdir bin
+fi
+javac -classpath ../lib/*:. -d bin Average.java
+cd bin
+jar -cfm average.jar ../MANIFEST.MF *
+rm *.class 
+cd ..

@@ -1,0 +1,2 @@
+#!/bin/bash
+~/workspace/hadoop-common-1.0.2/bin/hadoop jar bin/average.jar $1 $2 $3 $4 $5
