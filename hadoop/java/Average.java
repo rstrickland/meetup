@@ -25,6 +25,7 @@ public class Average extends Configured implements Tool {
     }
   
     public int run(String[] args) throws Exception {
+
         _logger.info("Starting Average");
         ConfigHelper.setRangeBatchSize(getConf(), 99);
     
@@ -79,6 +80,7 @@ public class Average extends Configured implements Tool {
     
         job.waitForCompletion(true);
         return 0;
+
     }
   
     public static class Map extends Mapper<ByteBuffer, SortedMap<ByteBuffer, IColumn>, Text, LongWritable> {  
@@ -96,6 +98,7 @@ public class Average extends Configured implements Tool {
     public static class Reduce extends Reducer<Text, LongWritable, ByteBuffer, List<Mutation>> {
     
         public void reduce(Text key, Iterable<LongWritable> values, Context context) throws IOException, InterruptedException {
+
             int sum = 0;
             int count = 0;
 
