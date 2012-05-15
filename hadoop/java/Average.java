@@ -36,6 +36,10 @@ public class Average extends Configured implements Tool {
         _logger.info("Setting up job");
         final Job job = new Job(getConf(), "average");
         final Configuration conf = job.getConfiguration();
+
+        //we don't have to use conf here since this is only used locally
+        //but this shows how to store globally accessible data
+        //that we can access at runtime from inside the mapper/reducer
         conf.set(keyspace, args[2]);
         conf.set(inputCF, args[3]);
         conf.set(outputCF, args[4]);

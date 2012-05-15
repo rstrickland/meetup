@@ -16,11 +16,11 @@ class Average {}
 
 object Average extends Configured with Tool {
 
-  private val _logger = Logger.getLogger("Average")
+  private val _logger = Logger.getLogger(classOf[Average])
 
-  val keyspace = "keyspace"
-  val inputCF = "inputCF"
-  val outputCF = "outputCF"
+  private val keyspace = "keyspace"
+  private val inputCF = "inputCF"
+  private val outputCF = "outputCF"
   
   def main(args: Array[String]) {
     ToolRunner.run(new Configuration, Average, args)
@@ -39,6 +39,10 @@ object Average extends Configured with Tool {
     _logger.info("Setting up job")
     val job = new Job(getConf(), "average")
     val conf = job.getConfiguration
+
+    //we don't have to use conf here since this is only used locally
+    //but this shows how to store globally accessible data
+    //that we can access at runtime from inside the mapper/reducer
     conf.set(keyspace, args(2))
     conf.set(inputCF, args(3))
     conf.set(outputCF, args(4))
@@ -59,6 +63,7 @@ object Average extends Configured with Tool {
     ConfigHelper.setInputInitialAddress(conf, cassHost)
     ConfigHelper.setInputPartitioner(conf, "org.apache.cassandra.dht.RandomPartitioner")
     ConfigHelper.setInputColumnFamily(conf, conf.get(keyspace), conf.get(inputCF))
+    //get all records
     val predicate = new SlicePredicate().setSlice_range(new SliceRange(ByteBufferUtil.bytes(""), ByteBufferUtil.bytes(""), false, Int.MaxValue))
     ConfigHelper.setInputSlicePredicate(conf, predicate)
 
@@ -87,8 +92,10 @@ object Average extends Configured with Tool {
   
   class Map extends Mapper[ByteBuffer, SortedMap[ByteBuffer, IColumn], Text, LongWritable] {  
     
+    //yes this crazy signature is necessary
+    //without it Hadoop gets the map and reduce contexts confused
     override def map(key: ByteBuffer, columns: SortedMap[ByteBuffer, IColumn], 
-		     context: Mapper[ByteBuffer, SortedMap[ByteBuffer, IColumn], Text, LongWritable]#Context) { 
+		                 context: Mapper[ByteBuffer, SortedMap[ByteBuffer, IColumn], Text, LongWritable]#Context) { 
       
       //group values by column name
       columns.values.foreach { col => 
@@ -100,6 +107,8 @@ object Average extends Configured with Tool {
   
   class Reduce extends Reducer[Text, LongWritable, ByteBuffer, java.util.List[Mutation]] {
     
+    //see comment on map method above
+    //also you must use the fully-qualified java.util.List to avoid confusion with Scala List
     override def reduce(key: Text, values: java.lang.Iterable[LongWritable], 
                         context: Reducer[Text, LongWritable, ByteBuffer, java.util.List[Mutation]]#Context) {
 
