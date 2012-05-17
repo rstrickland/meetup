@@ -115,7 +115,7 @@ object Average extends Configured with Tool {
       val vals = values.map(_.get).toList
       
       val c = new Column
-      c.setName(ByteBufferUtil.bytes("Average"))
+      c.setName(ByteBufferUtil.bytes("Scala_Average"))
       c.setValue(ByteBufferUtil.bytes(vals.sum/vals.length))
       c.setTimestamp(System.currentTimeMillis)
 

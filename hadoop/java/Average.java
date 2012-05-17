@@ -113,7 +113,7 @@ public class Average extends Configured implements Tool {
             }
 
             Column c = new Column();
-            c.setName(ByteBufferUtil.bytes("Average"));
+            c.setName(ByteBufferUtil.bytes("Java_Average"));
             c.setValue(ByteBufferUtil.bytes((long)sum/count));
             c.setTimestamp(System.currentTimeMillis());
 
