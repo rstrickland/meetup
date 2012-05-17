@@ -1,0 +1,3 @@
+create keyspace <keyspace>                                                            
+with placement_strategy = 'org.apache.cassandra.locator.NetworkTopologyStrategy'
+and strategy_options = {DC1:2, DC2:1};
