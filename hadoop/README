@@ -6,9 +6,9 @@ PREREQUISITES:
 
 1. Create the Cassandra schema with the following command:
 
-         cassandra-cli -h <cass_host> -f cassandra_schema.txt
+         cassandra-cli -h <cass_host> -f cassandra/cassandra_schema.txt
 
-2. Use seed_data.txt to populate some sample data (using the same command as above), or add your own data.
+2. Use cassandra/seed_data.txt to populate some sample data (using the same command as above), or add your own data.
 
 3. Increase the max heap size for the Hadoop client in hadoop-env.sh:
 
