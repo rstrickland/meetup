@@ -11,7 +11,7 @@ import org.apache.hadoop.mapreduce._
 import org.apache.hadoop.util._
 import org.apache.log4j.Logger
 
-//only used to pass to JobConf constructor
+//only used to pass to job configuration
 class Average {}
 
 object Average extends Configured with Tool {

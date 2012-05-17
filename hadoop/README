@@ -6,7 +6,7 @@ PREREQUISITES:
 
 1. Create the Cassandra schema with the following command:
 
-         cassandra-cli -h <cass_host> -p 9160 -f cassandra_schema.txt
+         cassandra-cli -h <cass_host> -f cassandra_schema.txt
 
 2. Use seed_data.txt to populate some sample data (using the same command as above), or add your own data.
 
