@@ -12,3 +12,7 @@ with key_validation_class = 'AsciiType'
 and comparator = 'AsciiType'
 and default_validation_class = 'LongType';
 
+create column family TestOutput2
+with key_validation_class = 'AsciiType'
+and comparator = 'AsciiType'
+and default_validation_class = 'LongType';

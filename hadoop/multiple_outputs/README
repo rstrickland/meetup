@@ -1,0 +1,7 @@
+To run:
+
+  ./run <cass_host> <num_reducers> <keyspace> <input_cf> <output_cf1> <output_cf2>
+
+Example:
+
+  ./run localhost 1 HadoopTest TestInput TestOutput TestOutput2
