@@ -1,0 +1,12 @@
+PREREQUISITES:
+
+- Cassandra 1.1
+- Hadoop 1.0.1+
+- Pig 0.10
+
+1. Open the pig_cassandra script and set the environment variables to match your local environment
+
+2. Some package managers install the pig binary in /usr/bin and the jars in /usr/share/pig. If this is the case
+   you will need to create /usr/share/pig/bin and copy the pig binary there.
+
+3. To run in a local environment (i.e. non-cluster) run "./pig_cassandra -x local average.pig"

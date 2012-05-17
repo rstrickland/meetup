@@ -16,19 +16,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-export PIG_HOME=/usr/share/pig
-export PIG_CONF_DIR=/usr/share/hadoop
+export JAVA_HOME=/usr/bin
+export PIG_HOME=/usr/local/bin/pig
+export PIG_CONF_DIR=/etc/hadoop
 export PIG_INITIAL_ADDRESS=localhost
 export PIG_RPC_PORT=9160
 export PIG_PARTITIONER=org.apache.cassandra.dht.RandomPartitioner
+export cassandra_home=/usr/share/cassandra
 
-cwd=`dirname $0`
-cassandra_home="$cwd/../../../"
+#cwd=`dirname $0`
+#cassandra_home="$cwd/../../../"
 
 # general jars.
-for jar in $cassandra_home/lib/*.jar $cassandra_home/build/lib/jars/*.jar $cassandra_home/build/apache-cassandra*.jar; do
+for jar in $cassandra_home/*.jar $cassandra_home/lib/*.jar $cassandra_home/build/lib/jars/*.jar $cassandra_home/build/apache-cassandra*.jar; do
     CLASSPATH=$CLASSPATH:$jar
 done
+
+echo $CLASSPATH
 
 if [ "x$PIG_HOME" = "x" ]; then
     echo "PIG_HOME not set: requires Pig >= 0.7.0" >&2
@@ -49,4 +53,5 @@ CLASSPATH=$CLASSPATH:$PIG_JAR
 
 export PIG_CLASSPATH=$PIG_CLASSPATH:$CLASSPATH
 export PIG_OPTS="$PIG_OPTS -Dudf.import.list=org.apache.cassandra.hadoop.pig"
+echo $PIG_OPTS
 $PIG_HOME/bin/pig $*

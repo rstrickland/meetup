@@ -4,13 +4,21 @@ PREREQUISITES:
 - JDK 1.6
 - Scala 2.9 (if building the Scala job)
 
-1. Open the Cassandra CLI, connect to a node, and paste the contents of cassandra_schema.txt.
+1. Create the Cassandra schema with the following command:
 
-2. Use seed_data.txt to populate some sample data, or add your own data.
+         cassandra-cli -h <cass_host> -p 9160 -f cassandra_schema.txt
 
-3. cd into either java or scala, and run the build script to generate the jar file.
+2. Use seed_data.txt to populate some sample data (using the same command as above), or add your own data.
 
-4. Execute the run script as follows:
+3. Increase the max heap size for the Hadoop client in hadoop-env.sh:
+
+         export HADOOP_CLIENT_OPTS="-Xmx1g $HADOOP_CLIENT_OPTS"
+
+4. Copy jars from lib directory into $HADOOP_HOME/lib or otherwise ensure they are on the Hadoop classpath
+
+5. cd into either java or scala, and run the build script to generate the jar file.
+
+6. Execute the run script as follows:
 
 	./run <cass_host> <num_reducers> <keyspace> <input_column_family> <output_column_family>
 

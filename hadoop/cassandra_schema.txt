@@ -1,11 +1,12 @@
 create keyspace HadoopTest;
+use HadoopTest;
 
-create column family TestInput;
+create column family TestInput with default_validation_class = 'LongType';
 assume TestInput keys as utf8;
 assume TestInput comparator as utf8;
 assume TestInput validator as long;
 
-create column family TestOutput;
+create column family TestOutput with default_validation_class = 'LongType';
 assume TestOutput keys as utf8;
 assume TestOutput comparator as utf8;
 assume TestOutput validator as long;
